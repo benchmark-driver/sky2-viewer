@@ -45,11 +45,11 @@ helpers do
       original = YAML.load_file(yaml)
       results['metrics_unit'] = original.fetch('metrics_unit')
 
-      # original['descriptions'].each do |version, description|
-      #   if (releases && !revision?(version)) || (!releases && revision?(version))
-      #     results['descriptions'][version] = description
-      #   end
-      # end
+      YAML.load_file(result_path('descriptions.yml')).fetch('descriptions').each do |version, description|
+        if (releases && !revision?(version)) || (!releases && revision?(version))
+          results['descriptions'][version] = description
+        end
+      end
 
       original['results'].each do |job, value_by_version|
         value_by_version.each do |version, value|
