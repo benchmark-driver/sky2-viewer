@@ -26,7 +26,15 @@
     jit_values = versions.map { |version| value_by_version["#{version} --jit"] }
 
     graph_data = {
-      'data-versions': versions.map { |v| "Ruby: #{v}<br>#{description_by_version.fetch(v)}" }.to_json,
+      'data-versions': versions.map { |v|
+        v_label =
+          if v.match(/\A\h{10}\z/)
+            "#{description_by_version.fetch(v).match(/\Aruby [^ ]+ \(([^ ]+)/)[1]} (#{v})"
+          else
+            v
+          end
+        "Ruby: #{v_label} <br>#{description_by_version.fetch(v)}"
+      }.to_json,
       'data-vm-values': vm_values.to_json,
     }
     if jit_values.any? { |v| !v.nil? }
@@ -71,7 +79,7 @@
           categories: graphElement.data('versions'),
           labels: {
             formatter: function() {
-              return /Ruby: ([^<]+)/.exec(this.value)[1]
+              return /Ruby: ([^< ]+)/.exec(this.value)[1]
             }
           }
         },
