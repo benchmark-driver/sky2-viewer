@@ -45,7 +45,7 @@ helpers do
       original = YAML.load_file(yaml)
       results['metrics_unit'] = original.fetch('metrics_unit')
 
-      YAML.load_file(result_path('descriptions.yml')).fetch('descriptions').each do |version, description|
+      YAML.load_file(result_path('descriptions.yml')).fetch(releases ? 'releases' : 'commits').each do |version, description|
         if (releases && !revision?(version)) || (!releases && revision?(version))
           results['descriptions'][version] = description
         end
