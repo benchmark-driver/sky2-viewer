@@ -28,8 +28,10 @@
     graph_data = {
       'data-versions': versions.map { |v| "Ruby: #{v}<br>#{description_by_version.fetch(v)}" }.to_json,
       'data-vm-values': vm_values.to_json,
-      'data-jit-values': jit_values.to_json,
     }
+    if jit_values.any? { |v| !v.nil? }
+      graph_data['data-jit-values'] = jit_values.to_json
+    end
   .benchmark_graph{ graph_data, id: "chart-#{index}", 'data-name': job, style: "width: #{width_percent}%;" }
 
 :javascript
@@ -40,6 +42,18 @@
       var name = graphElement.data('name');
       $('.benchmark_graph').hide();
       graphElement.show();
+
+      var series = [{
+        name: name,
+        data: graphElement.data('vm-values')
+      }]
+      if (graphElement.data('jit-values')) {
+        series.push({
+          name: name + " +JIT",
+          data: graphElement.data('jit-values')
+        })
+      }
+
       Highcharts.chart(graphElement.attr('id'), {
         chart: {
           type: type
@@ -61,13 +75,7 @@
             }
           }
         },
-        series: [{
-          name: name,
-          data: graphElement.data('vm-values')
-        },{
-          name: name + " +JIT",
-          data: graphElement.data('jit-values')
-        }]
+        series: series
       });
     };
 
