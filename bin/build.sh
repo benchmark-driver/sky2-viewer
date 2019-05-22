@@ -17,4 +17,4 @@ ln -s "$pages_path" build
 env \
   RESULT_PATH="$result_path" \
   TZ="Asia/Tokyo" \
-  bundle exec middleman build
+  bundle exec middleman build --verbose
