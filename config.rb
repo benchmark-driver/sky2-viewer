@@ -67,7 +67,7 @@ helpers do
   private
 
   def revision?(name)
-    name.match?(/\A\h{10}( --jit)?\z/)
+    name.to_s.match?(/\A\h{10}( --jit)?\z/)
   end
 end
 
