@@ -2,6 +2,14 @@
 
 sky2-bench result viewer.
 
+## Development
+
+```
+bundle exec middleman server
+```
+
+and open http://localhost:4567.
+
 ## License
 
 MIT License
