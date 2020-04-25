@@ -9,6 +9,7 @@
 
   # Optional Parameters:
   width_percent ||= 70
+  height_pixel ||= 340
   chart_type ||= 'column'
 
 #graph_metadata{ 'data-unit': metrics_unit, 'data-type': chart_type }
@@ -40,7 +41,7 @@
     if jit_values.any? { |v| !v.nil? }
       graph_data['data-jit-values'] = jit_values.to_json
     end
-  .benchmark_graph{ graph_data, id: "chart-#{index}", 'data-name': job, style: "width: #{width_percent}%;" }
+  .benchmark_graph{ graph_data, id: "chart-#{index}", 'data-name': job, style: "width: #{width_percent}%; height: #{height_pixel}px;" }
 
 :javascript
   $(function() {
