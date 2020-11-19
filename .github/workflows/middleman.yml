@@ -19,7 +19,7 @@ jobs:
           mkdir ~/.ssh
           echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ls -la ~/.ssh
+          ssh-keyscan -t rsa github.com
       - run: git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
       - run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
 
