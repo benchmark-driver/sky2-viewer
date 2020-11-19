@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: benchmark-driver/sky2-result
-          path: ../sky2-result
+          path: ./sky2-result
 
       - name: Install execjs runtime
         run: apt-get update && apt-get install -y nodejs
@@ -35,7 +35,7 @@ jobs:
         run: bundle exec middleman build --verbose
         env:
           TZ: Asia/Tokyo
-          RESULT_PATH: ../sky2-result
+          RESULT_PATH: ./sky2-result
 
       - name: Deploy benchmark-driver.github.io
         run: |
@@ -48,7 +48,7 @@ jobs:
             git commit -m "Automatic deployment by GitHub Actions
 
           Viewer: https://github.com/benchmark-driver/sky2-viewer/commit/$(git -C .. rev-parse HEAD)
-          Result: https://github.com/benchmark-driver/sky2-result/commit/$(git -C ../../sky2-result rev-parse HEAD)"
+          Result: https://github.com/benchmark-driver/sky2-result/commit/$(git -C ../sky2-result rev-parse HEAD)"
             git push origin master
           fi
         if: github.ref == 'refs/heads/master'

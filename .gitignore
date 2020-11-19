@@ -3,4 +3,5 @@
 .DS_Store
 .sass-cache
 /build
+/sky2-result
 nohup.out
