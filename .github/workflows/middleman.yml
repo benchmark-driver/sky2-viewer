@@ -21,7 +21,10 @@ jobs:
           repository: benchmark-driver/benchmark-driver.github.io
           ssh-key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
           path: ./build
-      - run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
+      - uses: actions/checkout@v2
+        with:
+          repository: benchmark-driver/sky2-result
+          path: ../sky2-result
 
       - name: Install execjs runtime
         run: apt-get update && apt-get install -y nodejs
