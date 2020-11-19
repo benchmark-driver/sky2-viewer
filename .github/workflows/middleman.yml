@@ -20,7 +20,7 @@ jobs:
           echo "${{ secrets.PUBLIC_DEPLOY_KEY }}" > ~/.ssh/id_rsa.pub
           echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-      - run: git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
+      - run: eval "$(ssh-agent -s)"; ssh-add ~/.ssh/id_rsa; git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
         env:
           GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
       - run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
