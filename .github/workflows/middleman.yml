@@ -16,12 +16,11 @@ jobs:
     container: ruby:2.6
     steps:
       - uses: actions/checkout@v2
-      - uses: webfactory/ssh-agent@v0.4.1
+      - uses: actions/checkout@v2
         with:
-          ssh-private-key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
-      - run: git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
-        env:
-          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+          repository: benchmark-driver/benchmark-driver.github.io
+          ssh-key: ${{ secrets.PRIVATE_DEPLOY_KEY }}
+          path: ./build
       - run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
 
       - name: Install execjs runtime
