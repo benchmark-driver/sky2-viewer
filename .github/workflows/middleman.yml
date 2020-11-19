@@ -44,7 +44,7 @@ jobs:
             git commit -m "Automatic deployment by GitHub Actions
 
           Viewer: https://github.com/benchmark-driver/sky2-viewer/commit/$(git -C .. rev-parse HEAD)
-          Result: https://github.com/benchmark-driver/sky2-result/commit/$(git rev-parse HEAD)"
+          Result: https://github.com/benchmark-driver/sky2-result/commit/$(git -C ../../sky2-result rev-parse HEAD)"
             git push origin master
           fi
-        # if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
