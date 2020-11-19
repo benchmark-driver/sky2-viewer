@@ -14,19 +14,15 @@ jobs:
     container: ruby:2.7
     steps:
       - uses: actions/checkout@v2
-      - name: Clone benchmark-driver.github.io
+      - name: Setup deploy key
         run: |
           mkdir ~/.ssh
           echo "${{ secrets.PRIVATE_DEPLOY_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com > ~/.ssh/known_hosts
-          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-          ssh-add ~/.ssh/id_rsa
-          git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
+      - run: git clone --depth=1 git@github.com:benchmark-driver/benchmark-driver.github.io ./build
         env:
-          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-      - name: Clone sky2-result
-        run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
+          GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+      - run: git clone --depth=1 https://github.com/benchmark-driver/sky2-result ../sky2-result
 
       - name: Install execjs runtime
         run: apt-get update && apt-get install -y nodejs
