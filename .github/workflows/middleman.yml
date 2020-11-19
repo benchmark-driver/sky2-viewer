@@ -32,3 +32,20 @@ jobs:
         env:
           TZ: Asia/Tokyo
           RESULT_PATH: ../sky2-result
+
+      - name: Deploy benchmark-driver.github.io
+        code: |
+          set -x
+          result_revision="$(git -C build rev-parse HEAD)"
+          cd ../benchmark-driver.github.io
+          git add .
+          if ! git diff-index --quiet HEAD --; then
+            git config --global user.email "sky2-result@benchmark-driver.github.io"
+            git config --global user.name "sky2-result"
+            git commit -m "Automatic deployment by GitHub Actions
+
+          Viewer: https://github.com/benchmark-driver/sky2-viewer/commit/$(git rev-parse HEAD)
+          Result: https://github.com/benchmark-driver/sky2-result/commit/$(git -C build rev-parse HEAD)"
+            git push origin master
+          fi
+        # if: github.ref == 'refs/heads/master'
