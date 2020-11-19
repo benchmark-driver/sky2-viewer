@@ -8,6 +8,8 @@ on:
       - opened
       - synchronize
       - reopened
+  repository_dispatch:
+    types: build
 jobs:
   build:
     runs-on: ubuntu-latest
