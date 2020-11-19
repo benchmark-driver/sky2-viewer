@@ -34,7 +34,7 @@ jobs:
           RESULT_PATH: ../sky2-result
 
       - name: Deploy benchmark-driver.github.io
-        code: |
+        run: |
           set -x
           result_revision="$(git -C build rev-parse HEAD)"
           cd ../benchmark-driver.github.io
