@@ -25,7 +25,7 @@
     versions = description_by_version.map(&:first).reject { |v| v.match?(/ --y?jit\z/) || !value_by_version.key?(v) }
     vm_values = versions.map { |version| value_by_version[version] }
     jit_values = versions.map { |version| value_by_version["#{version} --jit"] }
-    yjit_values = versions.map { |version| value_by_version["#{version} --yjit"] }.map { |value| value == 0.0 ? nil : value } # workaround to filter out no-YJIT versions
+    yjit_values = versions.map { |version| value_by_version["#{version} --yjit"] }
 
     graph_data = {
       'data-versions': versions.map { |v|
