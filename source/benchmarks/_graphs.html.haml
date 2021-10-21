@@ -22,9 +22,10 @@
 
 - value_by_version_by_job.each_with_index do |(job, value_by_version), index|
   :ruby
-    versions = description_by_version.map(&:first).reject { |v| v.end_with?(' --jit') || !value_by_version.key?(v) }
+    versions = description_by_version.map(&:first).reject { |v| v.match?(/ --y?jit\z/) || !value_by_version.key?(v) }
     vm_values = versions.map { |version| value_by_version[version] }
     jit_values = versions.map { |version| value_by_version["#{version} --jit"] }
+    yjit_values = versions.map { |version| value_by_version["#{version} --yjit"] }.map { |value| value == 0.0 ? nil : value } # workaround to filter out no-YJIT versions
 
     graph_data = {
       'data-versions': versions.map { |v|
@@ -40,6 +41,9 @@
     }
     if jit_values.any? { |v| !v.nil? }
       graph_data['data-jit-values'] = jit_values.to_json
+    end
+    if yjit_values.any? { |v| !v.nil? }
+      graph_data['data-yjit-values'] = yjit_values.to_json
     end
   .benchmark_graph{ graph_data, id: "chart-#{index}", 'data-name': job, style: "width: #{width_percent}%; height: #{height_pixel}px;" }
 
@@ -60,6 +64,12 @@
         series.push({
           name: name + " +JIT",
           data: graphElement.data('jit-values')
+        })
+      }
+      if (graphElement.data('yjit-values')) {
+        series.push({
+          name: name + " +YJIT",
+          data: graphElement.data('yjit-values')
         })
       }
 
