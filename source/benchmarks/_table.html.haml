@@ -1,6 +1,5 @@
 :ruby
   results = [
-    { name: 'Ruby Method', prefix: 'ruby_method', description: 'Ruby method benchmark set created by Watson1978', categories: %w[Array Enumerable Hash Object Range Time] },
     { name: 'Optcarrot',   prefix: 'optcarrot',   description: 'NES emulator created by Yusuke Endoh' },
     { name: 'Rubykon',     prefix: 'rubykon',     description: 'Go AI created by Tobias Pfeiffer' },
   ]
@@ -21,7 +20,6 @@
             %td= definition.fetch(:name)
             %td= category
             %td.margined-links
-              = link_to 'Ruby Releases', "/benchmarks/#{definition.fetch(:prefix)}/releases/#{category}.html"
               = link_to 'Ruby Commits', "/benchmarks/#{definition.fetch(:prefix)}/commits/#{category}.html"
     - else
       %thead
@@ -32,5 +30,4 @@
         %tr
           %td= definition.fetch(:name)
           %td.margined-links
-            = link_to 'Ruby Releases', "/benchmarks/#{definition.fetch(:prefix)}/releases.html"
             = link_to 'Ruby Commits', "/benchmarks/#{definition.fetch(:prefix)}/commits.html"
